@@ -1,6 +1,5 @@
 package entity;
 
-import java.util.List;
 import java.util.Objects;
 
 public class Carpark {
@@ -13,7 +12,6 @@ public class Carpark {
     private String carpark_address;
     private int carpark_popularity;
 
-    private List<ExtraServices> CarparkServices;
 
     public Carpark() {
     }
@@ -26,7 +24,6 @@ public class Carpark {
         this.carpark_country = carpark_country;
         this.carpark_address = carpark_address;
         this.carpark_popularity = carpark_popularity;
-        this.CarparkServices = CarparkServices;
     }
 
     public int getCarpark_id() {
@@ -85,14 +82,6 @@ public class Carpark {
         this.carpark_popularity = carpark_popularity;
     }
 
-    public List<ExtraServices> getCarparkServices() {
-        return CarparkServices;
-    }
-
-    public void setCarparkServices(List<ExtraServices> CarparkServices) {
-        this.CarparkServices = CarparkServices;
-    }
-
     @Override
     public int hashCode() {
         int hash = 3;
@@ -103,7 +92,6 @@ public class Carpark {
         hash = 97 * hash + Objects.hashCode(this.carpark_country);
         hash = 97 * hash + Objects.hashCode(this.carpark_address);
         hash = 97 * hash + this.carpark_popularity;
-        hash = 97 * hash + Objects.hashCode(this.CarparkServices);
         return hash;
     }
 
@@ -140,9 +128,7 @@ public class Carpark {
         if (!Objects.equals(this.carpark_country, other.carpark_country)) {
             return false;
         }
-        if (!Objects.equals(this.CarparkServices, other.CarparkServices)) {
-            return false;
-        }
+       
         return true;
     }
 
