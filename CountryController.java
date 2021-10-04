@@ -1,18 +1,13 @@
 package controller;
 
-import dao.CountryDAO;
 import entity.Country;
 import java.io.Serializable;
-import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 @Named
 @SessionScoped
 public class CountryController implements Serializable {
-
-    private CountryDAO cdao;
-    private List<Country> clist;
 
     private Country country;
 
@@ -62,7 +57,6 @@ public class CountryController implements Serializable {
     }
 
     public void create() {
-        this.getCdao().insert(this.country);
         this.clearForm();
     }
 
@@ -71,35 +65,14 @@ public class CountryController implements Serializable {
     }
 
     public void delete() {
-        this.getCdao().delete(this.country);
         this.clearForm();
     }
 
     public void update() {
-        this.getCdao().update(this.country);
         this.clearForm();
     }
 
-    public CountryDAO getCdao() {
-        if (this.cdao == null) {
-            this.cdao = new CountryDAO();
-        }
-        return cdao;
-    }
-
-    public void setCdao(CountryDAO cdao) {
-        this.cdao = cdao;
-    }
-
-    public List<Country> getClist() {
-        this.clist = this.getCdao().findAll(this.bul, this.page, this.pageSize);
-        return clist;
-    }
-
-    public void setClist(List<Country> clist) {
-        this.clist = clist;
-    }
-
+ 
     public Country getCountry() {
         if (this.country == null) {
             this.country = new Country();
@@ -136,7 +109,6 @@ public class CountryController implements Serializable {
     }
 
     public int getPageCount() {
-        this.pageCount = (int) Math.ceil(this.getCdao().count() / (double) pageSize);
         return pageCount;
     }
 
