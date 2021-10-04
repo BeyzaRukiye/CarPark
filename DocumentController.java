@@ -1,12 +1,10 @@
 package controller;
 
-import dao.DocumentDAO;
 import entity.Document;
 import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.nio.file.Files;
-import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,8 +19,6 @@ import javax.servlet.http.Part;
 public class DocumentController implements Serializable {
 
     private Document document;
-    private List<Document> documentList;
-    private DocumentDAO documentDao;
     private String bul = "";
 
     private Part doc;  //dosyamızı xhtml tarafına direk yollayamadığımız için part türünde bir referans ürettik
@@ -81,9 +77,6 @@ public class DocumentController implements Serializable {
             document.setFile_path(f.getParent());
             document.setFile_type(doc.getContentType());
             
-
-            this.getDocumentDao().insert(document);
-
         } catch (Exception e) {
             System.out.println("DocumentController HATA(UPLOAD):" + e.getMessage());
         }
@@ -112,25 +105,6 @@ public class DocumentController implements Serializable {
         this.document = document;
     }
 
-    public List<Document> getDocumentList() {
-        this.documentList = this.getDocumentDao().findAll(this.bul, this.page, this.pageSize);
-        return documentList;
-    }
-
-    public void setDocumentList(List<Document> documentList) {
-        this.documentList = documentList;
-    }
-
-    public DocumentDAO getDocumentDao() {
-        if (this.documentDao == null) {
-            this.documentDao = new DocumentDAO();
-        }
-        return documentDao;
-    }
-
-    public void setDocumentDao(DocumentDAO documentDao) {
-        this.documentDao = documentDao;
-    }
 
     public int getPage() {
         return page;
@@ -149,7 +123,6 @@ public class DocumentController implements Serializable {
     }
 
     public int getPageCount() {
-        this.pageCount = (int) Math.ceil(this.getDocumentDao().count() / (double) pageSize);
         return pageCount;
     }
 
