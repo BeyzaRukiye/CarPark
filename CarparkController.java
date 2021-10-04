@@ -1,9 +1,7 @@
 package controller;
 
-import dao.CarparkDAO;
 import entity.Carpark;
 import java.io.Serializable;
-import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -11,9 +9,6 @@ import javax.inject.Named;
 @Named
 @SessionScoped
 public class CarparkController implements Serializable {
-
-    private CarparkDAO carparkdao;
-    private List<Carpark> clist;
 
     private Carpark carpark;
 
@@ -71,8 +66,6 @@ public class CarparkController implements Serializable {
 
     public void create() {
 
-        this.getCarparkdao().insert(this.carpark);
-
         this.clearForm();
     }
 
@@ -81,34 +74,14 @@ public class CarparkController implements Serializable {
     }
 
     public void delete() {
-        this.getCarparkdao().delete(this.carpark);
         this.clearForm();
     }
 
     public void update() {
-        this.getCarparkdao().update(this.carpark);
         this.clearForm();
     }
 
-    public CarparkDAO getCarparkdao() {
-        if (this.carparkdao == null) {
-            this.carparkdao = new CarparkDAO();
-        }
-        return carparkdao;
-    }
-
-    public void setCarpakdao(CarparkDAO carparkdao) {
-        this.carparkdao = carparkdao;
-    }
-
-    public List<Carpark> getClist() {
-        this.clist = this.getCarparkdao().findAll(this.bul, this.page, this.pageSize);
-        return clist;
-    }
-
-    public void setClist(List<Carpark> clist) {
-        this.clist = clist;
-    }
+ 
 
     public Carpark getCarpark() {
         if (this.carpark == null) {
@@ -158,7 +131,6 @@ public class CarparkController implements Serializable {
     }
 
     public int getPageCount() {
-        this.pageCount = (int) Math.ceil(this.getCarparkdao().count() / (double) pageSize);
         return pageCount;
     }
 
