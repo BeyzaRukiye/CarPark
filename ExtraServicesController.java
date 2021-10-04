@@ -1,10 +1,7 @@
 package controller;
 
-import dao.ExtraServicesDAO;
 import entity.ExtraServices;
-
 import java.io.Serializable;
-import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -16,8 +13,6 @@ import javax.inject.Named;
 @SessionScoped
 public class ExtraServicesController implements Serializable {
 
-    private ExtraServicesDAO edao;
-    private List<ExtraServices> elist;
 
     private ExtraServices extraServices;
 
@@ -29,10 +24,6 @@ public class ExtraServicesController implements Serializable {
     private int page = 1;
     private int pageSize = 5;
     private int pageCount;
-
-    public void setTestlist(List<ExtraServices> testlist) {
-        this.testlist = testlist;
-    }
 
     @Inject
     private CarparkController carparkController;
@@ -84,34 +75,13 @@ public class ExtraServicesController implements Serializable {
     }
 
     public void delete() {
-        this.getEdao().delete(this.extraServices);
         this.clearForm();
     }
 
     public void update() {
-        this.getEdao().update(this.extraServices);
         this.clearForm();
     }
 
-    public ExtraServicesDAO getEdao() {
-        if (this.edao == null) {
-            this.edao = new ExtraServicesDAO();
-        }
-        return edao;
-    }
-
-    public void setEdao(ExtraServicesDAO edao) {
-        this.edao = edao;
-    }
-
-    public List<ExtraServices> getElist() {
-        this.elist = this.getEdao().findAll(this.bul, this.page, this.pageSize);
-        return elist;
-    }
-
-    public void setElist(List<ExtraServices> elist) {
-        this.elist = elist;
-    }
 
     public ExtraServices getExtraServices() {
         if (this.extraServices == null) {
@@ -153,7 +123,6 @@ public class ExtraServicesController implements Serializable {
     }
 
     public int getPageCount() {
-        this.pageCount = (int) Math.ceil(this.getEdao().count() / (double) pageSize);
         return pageCount;
     }
 
