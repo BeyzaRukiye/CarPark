@@ -1,9 +1,7 @@
 package controller;
 
-import dao.CityDAO;
 import entity.City;
 import java.io.Serializable;
-import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -11,9 +9,6 @@ import javax.inject.Named;
 @Named
 @SessionScoped
 public class CityController implements Serializable {
-
-    private CityDAO citydao;
-    private List<City> clist;
 
     private City city;
     /**
@@ -65,7 +60,6 @@ public class CityController implements Serializable {
     }
 
     public void create() {
-        this.getCitydao().insert(this.city);
         this.clearForm();
     }
 
@@ -74,35 +68,14 @@ public class CityController implements Serializable {
     }
 
     public void delete() {
-        this.getCitydao().delete(this.city);
         this.clearForm();
     }
 
     public void update() {
-        this.getCitydao().update(this.city);
         this.clearForm();
     }
 
-    public CityDAO getCitydao() {
-        if (this.citydao == null) {
-            this.citydao = new CityDAO();
-        }
-        return citydao;
-    }
-
-    public void setCitydao(CityDAO citydao) {
-        this.citydao = citydao;
-    }
-
-    public List<City> getClist() {
-        this.clist = this.getCitydao().findAll(this.bul, this.page, this.pageSize);
-        return clist;
-    }
-
-    public void setClist(List<City> clist) {
-        this.clist = clist;
-    }
-
+  
     public City getCity() {
         if (this.city == null) {
             this.city = new City();
@@ -147,7 +120,6 @@ public class CityController implements Serializable {
     }
 
     public int getPageCount() {
-        this.pageCount = (int) Math.ceil(this.getCitydao().count() / (double) pageSize);
         return pageCount;
     }
 
