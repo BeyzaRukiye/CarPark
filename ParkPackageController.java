@@ -1,9 +1,7 @@
 package controller;
 
-import dao.ParkPackageDAO;
 import entity.ParkPackage;
 import java.io.Serializable;
-import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 /**
@@ -13,9 +11,6 @@ import javax.inject.Named;
 @Named
 @SessionScoped
 public class ParkPackageController implements Serializable {
-
-    private ParkPackageDAO pdao;
-    private List<ParkPackage> plist;
 
     private ParkPackage parkPackage;
 
@@ -65,7 +60,6 @@ public class ParkPackageController implements Serializable {
     }
 
     public void create() {
-        this.getPdao().insert(this.parkPackage);
         this.clearForm();
     }
 
@@ -74,33 +68,11 @@ public class ParkPackageController implements Serializable {
     }
 
     public void delete() {
-        this.getPdao().delete(this.parkPackage);
         this.clearForm();
     }
 
     public void update() {
-        this.getPdao().update(this.parkPackage);
         this.clearForm();
-    }
-
-    public ParkPackageDAO getPdao() {
-        if (this.pdao == null) {
-            this.pdao = new ParkPackageDAO();
-        }
-        return pdao;
-    }
-
-    public void setPdao(ParkPackageDAO pdao) {
-        this.pdao = pdao;
-    }
-
-    public List<ParkPackage> getPlist() {
-        this.plist = this.getPdao().findAll(this.bul, this.page, this.pageSize);
-        return plist;
-    }
-
-    public void setPlist(List<ParkPackage> plist) {
-        this.plist = plist;
     }
 
     public ParkPackage getParkPackage() {
@@ -139,7 +111,6 @@ public class ParkPackageController implements Serializable {
     }
 
     public int getPageCount() {
-        this.pageCount = (int) Math.ceil(this.getPdao().count() / (double) pageSize);
         return pageCount;
     }
 
